@@ -9,7 +9,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "/Users/kangbing/Desktop/Leetcode_Golang/Top101-200/majorityElement_169.go"
+            "program": "/Users/kangbing/Desktop/Leetcode_Golang/try.go"
         }
     ]
 }
