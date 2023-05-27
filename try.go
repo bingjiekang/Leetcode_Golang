@@ -1,34 +1,36 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
-	var tm []int = []int{1, 2, 3, 1}
-	fmt.Println(massage(tm))
+	// for Thead.Next != nil {
+	// 	if Thead.Next.Val == val {
+	// 		Thead.Next = Thead.Next.Next
+	// 	}
+	// 	Thead = Thead.Next
+	// }
+	// fmt.Println(AllAdd(19))
 }
 
-func massage(nums []int) int {
-	result := 0
-	dp0 := 0
-	dp1 := nums[0]
-	for i, v := range nums {
-		if i > 0 {
-			result = max(max(dp0, dp1), dp0+v) //2 4 4
-			dp0 = max(dp0, dp1)                //1 2 4
-			dp1 = dp0 + v                      // 2 4 3
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func removeElements(head *ListNode, val int) *ListNode {
+	var Thead *ListNode
+	Thead = head
+	for Thead.Val == val {
+		head = Thead.Next
+		Thead = head
+	}
+	if head == nil {
+		return head
+	}
+	for Thead.Next != nil {
+		if Thead.Next.Val == val {
+			Thead.Next = Thead.Next.Next
 		}
+		Thead = Thead.Next
 	}
-	return result
-}
-
-// max函数
-func max(n int, m int) int {
-
-	if n > m {
-		return n
-	}
-	return m
+	return head
 
 }
