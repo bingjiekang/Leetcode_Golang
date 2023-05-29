@@ -1,36 +1,25 @@
 package main
 
+import (
+	"fmt"
+)
+
 func main() {
-	// for Thead.Next != nil {
-	// 	if Thead.Next.Val == val {
-	// 		Thead.Next = Thead.Next.Next
-	// 	}
-	// 	Thead = Thead.Next
-	// }
-	// fmt.Println(AllAdd(19))
+	var tm []int = []int{1, 2, 3, 1}
+	fmt.Println(containsNearbyDuplicate(tm, 3))
 }
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
-func removeElements(head *ListNode, val int) *ListNode {
-	var Thead *ListNode
-	Thead = head
-	for Thead.Val == val {
-		head = Thead.Next
-		Thead = head
-	}
-	if head == nil {
-		return head
-	}
-	for Thead.Next != nil {
-		if Thead.Next.Val == val {
-			Thead.Next = Thead.Next.Next
+func containsNearbyDuplicate(nums []int, k int) bool {
+	var tmp map[int]int = make(map[int]int, 1)
+	for i, v := range nums {
+		if tmp[v] > 0 {
+			tmp[v] = i - tmp[v]
+			if tmp[v] <= k {
+				return true
+			}
+		} else {
+			tmp[v] = i + 1
 		}
-		Thead = Thead.Next
 	}
-	return head
-
+	return false
 }
