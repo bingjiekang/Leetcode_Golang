@@ -5,21 +5,33 @@ import (
 )
 
 func main() {
-	var tm []int = []int{1, 2, 3, 1}
-	fmt.Println(containsNearbyDuplicate(tm, 3))
+	m := Constructor()
+	m.Push(3)
+	m.Push(4)
+	m.Push(5)
+	fmt.Println(m.quen1, m.quen2)
+	fmt.Println(m.Pop())
+	fmt.Println(m.quen1, m.quen2)
 }
 
-func containsNearbyDuplicate(nums []int, k int) bool {
-	var tmp map[int]int = make(map[int]int, 1)
-	for i, v := range nums {
-		if tmp[v] > 0 {
-			tmp[v] = i - tmp[v]
-			if tmp[v] <= k {
-				return true
-			}
-		} else {
-			tmp[v] = i + 1
-		}
+type MyStack struct {
+	quen1, quen2 []int
+}
+
+func Constructor() (s MyStack) {
+	return
+}
+
+func (this *MyStack) Push(x int) {
+	this.quen2 = append(this.quen2, x)
+	for _, v := range this.quen1 {
+		this.quen2 = append(this.quen2, v)
 	}
-	return false
+	this.quen2, this.quen1 = this.quen1[0:0], this.quen2
+}
+
+func (this *MyStack) Pop() int {
+	temp := this.quen1[0]
+	this.quen1 = this.quen1[1:]
+	return temp
 }
