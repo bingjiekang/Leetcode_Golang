@@ -5,33 +5,33 @@ import (
 )
 
 func main() {
-	m := Constructor()
-	m.Push(3)
-	m.Push(4)
-	m.Push(5)
-	fmt.Println(m.quen1, m.quen2)
-	fmt.Println(m.Pop())
-	fmt.Println(m.quen1, m.quen2)
+	var tm, tmn *ListNode
+	tm.Val = 1
+	tmn.Val = 1
+	tm.Next = tmn
+	fmt.Println(isPalindrome(tm))
 }
 
-type MyStack struct {
-	quen1, quen2 []int
+// Definition for singly-linked list.
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
-func Constructor() (s MyStack) {
-	return
-}
-
-func (this *MyStack) Push(x int) {
-	this.quen2 = append(this.quen2, x)
-	for _, v := range this.quen1 {
-		this.quen2 = append(this.quen2, v)
+func isPalindrome(head *ListNode) bool {
+	var temp []int = make([]int, 1)
+	for head != nil {
+		temp = append(temp, head.Val)
+		head = head.Next
 	}
-	this.quen2, this.quen1 = this.quen1[0:0], this.quen2
-}
-
-func (this *MyStack) Pop() int {
-	temp := this.quen1[0]
-	this.quen1 = this.quen1[1:]
-	return temp
+	length := len(temp)
+	left, right := 0, length-1
+	for left < right {
+		if temp[left] != temp[right] {
+			return false
+		}
+		left++
+		right--
+	}
+	return true
 }
