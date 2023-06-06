@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func main() {
@@ -9,35 +10,28 @@ func main() {
 	// tm.Val = 1
 	// tmn.Val = 1
 	// tm.Next = tmn
-	fmt.Println(isAnagram("anagram", "nagam"))
+	fmt.Println(wordPattern("a", "dog"))
 }
 
-func isAnagram(s string, t string) bool {
-	// var tmlf,tmrg map[byte]int,map[byte]int = make()
-	var tmlf, tmrg map[rune]int = make(map[rune]int, 1), make(map[rune]int, 1)
-	// var tmrg map[rune]int = make(map[rune]int, 1)
-	for _, v := range s {
-		_, ok := tmlf[v]
-		if !ok {
-			tmlf[v] = 1
-		} else {
-			tmlf[v]++
-		}
+func wordPattern(pattern string, s string) bool {
+	var tmp []string = strings.Split(s, " ")
+	var left map[rune]string = make(map[rune]string, 1)
+	var right map[string]rune = make(map[string]rune, 1)
+	if len(pattern) != len(tmp) {
+		return false
 	}
-	for _, v := range t {
-
-		_, ok := tmrg[v]
+	for i, v := range pattern {
+		_, ok := left[v]
 		if !ok {
-			tmrg[v] = 1
+			left[v] = tmp[i]
+			right[tmp[i]] = v
 		} else {
-			tmrg[v]++
-		}
-	}
-	for temp := range tmlf {
-		if tmlf[temp] != tmrg[temp] {
-			return false
+			if left[v] != tmp[i] || right[tmp[i]] != v {
+				return false
+			} else if right[left[v]] != v || left[right[tmp[i]]] != tmp[i] {
+				return false
+			}
 		}
 	}
 	return true
-
 }
