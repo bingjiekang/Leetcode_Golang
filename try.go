@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 func main() {
@@ -10,28 +9,31 @@ func main() {
 	// tm.Val = 1
 	// tmn.Val = 1
 	// tm.Next = tmn
-	fmt.Println(wordPattern("a", "dog"))
+	nums := []int{1, 2, 3, 4, 5}
+	fmt.Println(Constructor(nums))
 }
 
-func wordPattern(pattern string, s string) bool {
-	var tmp []string = strings.Split(s, " ")
-	var left map[rune]string = make(map[rune]string, 1)
-	var right map[string]rune = make(map[string]rune, 1)
-	if len(pattern) != len(tmp) {
-		return false
-	}
-	for i, v := range pattern {
-		_, ok := left[v]
-		if !ok {
-			left[v] = tmp[i]
-			right[tmp[i]] = v
-		} else {
-			if left[v] != tmp[i] || right[tmp[i]] != v {
-				return false
-			} else if right[left[v]] != v || left[right[tmp[i]]] != tmp[i] {
-				return false
-			}
-		}
-	}
-	return true
+type NumArray struct {
+	nums []int
 }
+
+func Constructor(nums []int) NumArray {
+	sums := make([]int, len(nums)+1)
+	sums = nums
+	return NumArray{sums}
+}
+
+func (this *NumArray) SumRange(left int, right int) int {
+	sult := 0
+	for left <= right {
+		sult += this.nums[left]
+		left++
+	}
+	return sult
+}
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * obj := Constructor(nums);
+ * param_1 := obj.SumRange(left,right);
+ */
