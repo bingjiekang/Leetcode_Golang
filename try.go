@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"strings"
+	// "strconv"
+	// "time"
 	// "math"
 )
 
@@ -9,21 +12,31 @@ func main() {
 	// // fmt.Println(countAndSay(5))
 	// a := 3
 	// tm := fmt.Sprintf("%b", a)
-	fmt.Println(CountBit(1))
-	fmt.Println(CountBit(2))
-	fmt.Println(CountBit(3))
-	fmt.Println(CountBit(7))
-	fmt.Println(CountBit(15))
-	fmt.Println(CountBit(12))
+	// fmt.Println(time.Now().UnixNano())
+
+	fmt.Println(reverseVowels("hello"))
 
 }
 
-func CountBit(n int) (sum int) {
-	for n/2 != 0 || n == 1 {
-		if n%2 == 1 {
-			sum++
+func reverseVowels(s string) string {
+	tmp := []rune(s)
+	length := len(tmp)
+	left, right := 0, length-1
+	for left < right {
+		for right > left && !strings.Contains("aeiouAEIOU", string(tmp[right])) {
+			right--
 		}
-		n /= 2
+		for left < right && !strings.Contains("aeiouAEIOU", string(tmp[left])) {
+			left++
+		}
+		if left < right {
+			tmp[left], tmp[right] = tmp[right], tmp[left]
+			left++
+			right--
+		} else {
+			break
+		}
 	}
-	return
+	return string(tmp)
+
 }
