@@ -1,42 +1,32 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-	// "strconv"
-	// "time"
-	// "math"
-)
+// "strconv"
+// "time"
+// "math"
 
 func main() {
 	// // fmt.Println(countAndSay(5))
 	// a := 3
 	// tm := fmt.Sprintf("%b", a)
 	// fmt.Println(time.Now().UnixNano())
+	// nums1 := [1,2,2,1]
+	// nums2
 
-	fmt.Println(reverseVowels("hello"))
+	// fmt.Println(intersect(,[2,2]))
 
 }
 
-func reverseVowels(s string) string {
-	tmp := []rune(s)
-	length := len(tmp)
-	left, right := 0, length-1
-	for left < right {
-		for right > left && !strings.Contains("aeiouAEIOU", string(tmp[right])) {
-			right--
-		}
-		for left < right && !strings.Contains("aeiouAEIOU", string(tmp[left])) {
-			left++
-		}
-		if left < right {
-			tmp[left], tmp[right] = tmp[right], tmp[left]
-			left++
-			right--
-		} else {
-			break
+func intersect(nums1 []int, nums2 []int) (nums []int) {
+	var hash map[int]int = make(map[int]int)
+	for _, v := range nums1 {
+		hash[v] += 1
+	}
+	for _, v := range nums2 {
+		sult, err := hash[v]
+		if err && sult > 0 {
+			hash[v] -= 1
+			nums = append(nums, v)
 		}
 	}
-	return string(tmp)
-
+	return
 }
