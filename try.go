@@ -1,32 +1,30 @@
 package main
 
+import (
+	"fmt"
+)
+
 // "strconv"
 // "time"
 // "math"
 
 func main() {
-	// // fmt.Println(countAndSay(5))
-	// a := 3
-	// tm := fmt.Sprintf("%b", a)
-	// fmt.Println(time.Now().UnixNano())
-	// nums1 := [1,2,2,1]
-	// nums2
 
-	// fmt.Println(intersect(,[2,2]))
+	fmt.Println((1 + 1) / 2)
 
 }
 
-func intersect(nums1 []int, nums2 []int) (nums []int) {
-	var hash map[int]int = make(map[int]int)
-	for _, v := range nums1 {
-		hash[v] += 1
-	}
-	for _, v := range nums2 {
-		sult, err := hash[v]
-		if err && sult > 0 {
-			hash[v] -= 1
-			nums = append(nums, v)
+func isPerfectSquare(num int) bool {
+	left, right := 1, num
+	for left < right {
+		mid := (left + right) / 2
+		if mid*mid < num {
+			left = mid + 1
+		} else if mid*mid > num {
+			right = mid - 1
+		} else {
+			return true
 		}
 	}
-	return
+	return false
 }
