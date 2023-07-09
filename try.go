@@ -14,17 +14,18 @@ func main() {
 
 }
 
-func isPerfectSquare(num int) bool {
-	left, right := 1, num
-	for left < right {
-		mid := (left + right) / 2
-		if mid*mid < num {
-			left = mid + 1
-		} else if mid*mid > num {
-			right = mid - 1
+func canConstruct(ransomNote string, magazine string) bool {
+	var hash map[rune]int = make(map[rune]int, 0)
+	for _, v := range magazine {
+		hash[v]++
+	}
+	for _, v := range ransomNote {
+		// _,err := hash[v]
+		if hash[v] > 0 {
+			hash[v]--
 		} else {
-			return true
+			return false
 		}
 	}
-	return false
+	return true
 }
