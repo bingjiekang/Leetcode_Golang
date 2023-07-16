@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	// "strconv"
 )
 
 // "strconv"
@@ -10,42 +11,30 @@ import (
 
 func main() {
 
-	fmt.Println((1 + 1) / 2)
+	// var lt []int = []int{1, 2, 3, 4, 2, 2, 1, 2, 8, 6, 6, 6, 4, 8, 9}
+	// QuickSort(lt, 0, len(lt)-1)
+	// fmt.Print(lt)
+	// x := fmt.Sprintf("%.0b", 7)
+	// fmt.Println(x)
+	// x := 1<<3
+	// for i,v := range {
 
+	// }
+	// t := byte(2)
+	// fmt.Println(t)
 }
 
-//	func firstUniqChar(s string) int {
-//		// 定义两个hash表，一个对字母的每一次下标进行赋值，一个记录第一次出现的字母下标,如果两个相同,证明没有重复,否则为重复
-//		var list1, list2 map[rune]int
-//		list1 = make(map[rune]int, 0)
-//		list2 = make(map[rune]int, 0)
-//		for i, v := range s {
-//			list1[v] = i
-//			_, err := list2[v]
-//			if !err {
-//				list2[v] = i
-//			}
-//		}
-//		for i, v := range s {
-//			if list1[v] == list2[v] {
-//				return i
-//			}
-//		}
-//		return -1
-//	}
-func firstUniqChar(s string) int {
-	// 定义两个hash表，一个对字母的每一次下标进行赋值，一个记录第一次出现的字母下标,如果两个相同,证明没有重复,否则为重复
-	var lt map[rune]int
-	length := len(s)
-	lt = make(map[rune]int, length)
-	for i, v := range s {
-		lt[v] = i
-	}
-	for i, v := range s {
-		if lt[v] == i && lt[v] != -1 {
-			return i
+// 解析使用位运算,由于1-n的二进制位对应的就是每个子集出现的位置,则可以对每个数进行向右移动,移动的位数为,数组的下标,如果此时与1后仍大于0,证明这个位数为1,如果与1后为0则证明这位为0,不用选取
+func subsets(nums []int) (sult [][]int) {
+	length := len(nums)
+	for nm := 0; nm < (1 << length); nm++ {
+		var temp []int
+		for i, v := range nums {
+			if nm>>i&1 > 0 {
+				temp = append(temp, v)
+			}
 		}
-		lt[v] = -1
+		sult = append(sult, temp)
 	}
-	return -1
+	return
 }
