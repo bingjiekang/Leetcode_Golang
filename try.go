@@ -24,17 +24,30 @@ func main() {
 	// fmt.Println(t)
 }
 
-// 解析使用位运算,由于1-n的二进制位对应的就是每个子集出现的位置,则可以对每个数进行向右移动,移动的位数为,数组的下标,如果此时与1后仍大于0,证明这个位数为1,如果与1后为0则证明这位为0,不用选取
-func subsets(nums []int) (sult [][]int) {
+var nm int = len("2344")
+
+func jump(nums []int) int {
+	dp := make([][]int, 10000, 10000)
+	// var dp [10000][10000]int = make([10000][10000]int, 0)
 	length := len(nums)
-	for nm := 0; nm < (1 << length); nm++ {
-		var temp []int
-		for i, v := range nums {
-			if nm>>i&1 > 0 {
-				temp = append(temp, v)
+	for i := length - 1; i >= 0; i-- {
+		dp[i] = make([]int, 10000)
+		for j := i; j < length; j++ {
+			if i == j {
+				dp[i][j] = 0
+			} else if nums[i] >= j-i {
+				dp[i][j] = 1
+			} else {
+				min := 10000
+				for temp := i + 1; temp < j; temp++ {
+					min_temp := dp[i][temp] + dp[temp][j]
+					if min_temp < min {
+						min = min_temp
+					}
+				}
+				dp[i][j] = min
 			}
 		}
-		sult = append(sult, temp)
 	}
-	return
+	return dp[0][length-1]
 }
