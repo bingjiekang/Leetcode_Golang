@@ -23,31 +23,20 @@ func main() {
 	// t := byte(2)
 	// fmt.Println(t)
 }
-
-var nm int = len("2344")
-
-func jump(nums []int) int {
-	dp := make([][]int, 10000, 10000)
-	// var dp [10000][10000]int = make([10000][10000]int, 0)
-	length := len(nums)
-	for i := length - 1; i >= 0; i-- {
-		dp[i] = make([]int, 10000)
-		for j := i; j < length; j++ {
-			if i == j {
-				dp[i][j] = 0
-			} else if nums[i] >= j-i {
-				dp[i][j] = 1
-			} else {
-				min := 10000
-				for temp := i + 1; temp < j; temp++ {
-					min_temp := dp[i][temp] + dp[temp][j]
-					if min_temp < min {
-						min = min_temp
-					}
-				}
-				dp[i][j] = min
-			}
+func longestPalindrome(s string) int {
+	var hash map[rune]int = make(map[rune]int, 0)
+	var sult, temp int
+	for _, v := range s {
+		hash[v]++
+	}
+	for i := range hash {
+		if hash[i]%2 == 0 {
+			sult += hash[i]
+		} else {
+			sult += (hash[i] - 1)
+			temp = 1
 		}
 	}
-	return dp[0][length-1]
+	return sult + temp
+
 }
