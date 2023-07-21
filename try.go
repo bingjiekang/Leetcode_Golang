@@ -22,21 +22,28 @@ func main() {
 	// }
 	// t := byte(2)
 	// fmt.Println(t)
+	fmt.Println(15 / 16)
+
 }
-func longestPalindrome(s string) int {
-	var hash map[rune]int = make(map[rune]int, 0)
-	var sult, temp int
-	for _, v := range s {
-		hash[v]++
-	}
-	for i := range hash {
-		if hash[i]%2 == 0 {
-			sult += hash[i]
-		} else {
-			sult += (hash[i] - 1)
-			temp = 1
+
+func toHex(num int) string {
+	var st []rune = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'}
+	var sult []rune = make([]rune, 0)
+	if num >= 0 {
+		temp := num
+		for temp/16 != 0 {
+			sult = append(sult, st[temp%16])
+			temp /= 16
 		}
+		sult = append(sult, st[temp])
+	} else {
+		sult = []rune{'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'}
+		temp := num * (-1)
+		for i := 7; temp/16 != 0 && i >= 0; i-- {
+			sult[i] = st[16-(temp%16)]
+			temp /= 16
+		}
+
 	}
-	return sult + temp
 
 }
