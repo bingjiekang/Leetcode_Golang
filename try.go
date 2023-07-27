@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	// "strconv"
-	"math/bits"
 )
 
 // "strconv"
@@ -23,19 +21,40 @@ func main() {
 	// }
 	// t := byte(2)
 	// fmt.Println(t)
-	fmt.Println(bits.OnesCount(5))
-	fmt.Fprint()
+	// var temp []rune = []rune{'0','1','2','3','4','5'}
+	// fmt.Println(string(temp))
+	fmt.Println(toHex(26), toHex(5), toHex(38), toHex(-1), toHex(-26), toHex(-18))
+	// fmt.Println(string(temp[]))
+	// fmt.Fprint()
 
 }
 
-func readBinaryWatch(turnedOn int) (sult []string) {
-	var i, j uint
-	for i = 0; i < 12; i++ {
-		for j = 0; j < 60; j++ {
-			if bits.OnesCount(i)+bits.OnesCount(j) == turnedOn {
-				sult = append(sult, fmt.Sprintf("%d:%02d", i, j))
-			}
+func toHex(num int) string {
+	var base []rune = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'}
+	var sult []rune = make([]rune, 0)
+	temp := num
+	if temp >= 0 {
+		for temp/16 != 0 {
+			sult = append(sult, base[temp%16])
+			temp /= 16
 		}
+		sult = append(sult, base[temp])
+		length := len(sult)
+		for i, j := 0, length-1; i <= j; {
+			sult[i], sult[j] = sult[j], sult[i]
+			i++
+			j--
+		}
+	} else {
+		sult = []rune{'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'}
+		temp = (-1) * temp
+		var tmi int = len(sult) - 1
+		for ; temp/16 != 0; tmi-- {
+			sult[tmi] = base[15-(temp%16)]
+			temp /= 16
+		}
+		sult[tmi] = base[15-temp]
 	}
-	return
+	return string(sult)
+
 }
