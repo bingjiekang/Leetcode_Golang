@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	// "strconv"
+	"math/bits"
 )
 
 // "strconv"
@@ -22,28 +23,19 @@ func main() {
 	// }
 	// t := byte(2)
 	// fmt.Println(t)
-	fmt.Println(15 / 16)
+	fmt.Println(bits.OnesCount(5))
+	fmt.Fprint()
 
 }
 
-func toHex(num int) string {
-	var st []rune = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'}
-	var sult []rune = make([]rune, 0)
-	if num >= 0 {
-		temp := num
-		for temp/16 != 0 {
-			sult = append(sult, st[temp%16])
-			temp /= 16
+func readBinaryWatch(turnedOn int) (sult []string) {
+	var i, j uint
+	for i = 0; i < 12; i++ {
+		for j = 0; j < 60; j++ {
+			if bits.OnesCount(i)+bits.OnesCount(j) == turnedOn {
+				sult = append(sult, fmt.Sprintf("%d:%02d", i, j))
+			}
 		}
-		sult = append(sult, st[temp])
-	} else {
-		sult = []rune{'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'}
-		temp := num * (-1)
-		for i := 7; temp/16 != 0 && i >= 0; i-- {
-			sult[i] = st[16-(temp%16)]
-			temp /= 16
-		}
-
 	}
-
+	return
 }
