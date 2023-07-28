@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 // "strconv"
@@ -10,51 +11,80 @@ import (
 
 func main() {
 
-	// var lt []int = []int{1, 2, 3, 4, 2, 2, 1, 2, 8, 6, 6, 6, 4, 8, 9}
-	// QuickSort(lt, 0, len(lt)-1)
-	// fmt.Print(lt)
-	// x := fmt.Sprintf("%.0b", 7)
-	// fmt.Println(x)
-	// x := 1<<3
-	// for i,v := range {
+	// n := 3
+
+	// for i := 0; i <= 4; i++ {
+	// 	switch i {
+	// 	case 3:
+	// 		fmt.Println(3)
+	// 	default:
+	// 		fmt.Println(99999)
+	// 	}
 
 	// }
-	// t := byte(2)
-	// fmt.Println(t)
-	// var temp []rune = []rune{'0','1','2','3','4','5'}
-	// fmt.Println(string(temp))
-	fmt.Println(toHex(26), toHex(5), toHex(38), toHex(-1), toHex(-26), toHex(-18))
-	// fmt.Println(string(temp[]))
-	// fmt.Fprint()
+	// fmt.Println("end")
+	// var lt stack
+	// fmt.Println(lt)
+	// lt.push(4)
+	// fmt.Println(lt)
+	// lt.push(6)
+	// fmt.Println(lt)
+	// fmt.Println(lt.pop())
+	// fmt.Println(lt)
+	// tm := []rune("123")
+	// fmt.Println(tm, int())
+	// fmt.Println(strconv.ParseInt("123",10,32).type())
+}
+
+func evalRPN(tokens []string) int {
+	var lt stack
+	for _, v := range tokens {
+		switch v {
+		case "+":
+			num2 := lt.pop()
+			num1 := lt.pop()
+			sum := num1 + num2
+			lt.push(sum)
+		case "-":
+			num2 := lt.pop()
+			num1 := lt.pop()
+			sum := num1 - num2
+			lt.push(sum)
+		case "*":
+			num2 := lt.pop()
+			num1 := lt.pop()
+			sum := num1 * num2
+			lt.push(sum)
+		case "/":
+			num2 := lt.pop()
+			num1 := lt.pop()
+			sum := num1 / num2
+			lt.push(sum)
+		default:
+			temp, _ := strconv.ParseInt(v, 10, 64)
+			lt.push(int(temp))
+		}
+	}
+	return lt.pop()
 
 }
 
-func toHex(num int) string {
-	var base []rune = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'}
-	var sult []rune = make([]rune, 0)
-	temp := num
-	if temp >= 0 {
-		for temp/16 != 0 {
-			sult = append(sult, base[temp%16])
-			temp /= 16
-		}
-		sult = append(sult, base[temp])
-		length := len(sult)
-		for i, j := 0, length-1; i <= j; {
-			sult[i], sult[j] = sult[j], sult[i]
-			i++
-			j--
-		}
-	} else {
-		sult = []rune{'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'}
-		temp = (-1) * temp
-		var tmi int = len(sult) - 1
-		for ; temp/16 != 0; tmi-- {
-			sult[tmi] = base[15-(temp%16)]
-			temp /= 16
-		}
-		sult[tmi] = base[15-temp]
-	}
-	return string(sult)
+// 实现一个堆
+type stack struct {
+	List []int
+}
 
+func (this *stack) push(dig int) {
+	this.List = append(this.List, dig)
+}
+
+func (this *stack) pop() int {
+	length := len(this.List)
+	wait := this.List[length-1]
+	this.List = this.List[:length-1]
+	return wait
+}
+
+func (this *stack) isnil() bool {
+	return len(this.List) == 0
 }
