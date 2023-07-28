@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"strconv"
+	"sort"
 )
 
 // "strconv"
@@ -22,69 +22,29 @@ func main() {
 	// 	}
 
 	// }
-	// fmt.Println("end")
-	// var lt stack
-	// fmt.Println(lt)
-	// lt.push(4)
-	// fmt.Println(lt)
-	// lt.push(6)
-	// fmt.Println(lt)
-	// fmt.Println(lt.pop())
-	// fmt.Println(lt)
-	// tm := []rune("123")
-	// fmt.Println(tm, int())
-	// fmt.Println(strconv.ParseInt("123",10,32).type())
-}
-
-func evalRPN(tokens []string) int {
-	var lt stack
-	for _, v := range tokens {
-		switch v {
-		case "+":
-			num2 := lt.pop()
-			num1 := lt.pop()
-			sum := num1 + num2
-			lt.push(sum)
-		case "-":
-			num2 := lt.pop()
-			num1 := lt.pop()
-			sum := num1 - num2
-			lt.push(sum)
-		case "*":
-			num2 := lt.pop()
-			num1 := lt.pop()
-			sum := num1 * num2
-			lt.push(sum)
-		case "/":
-			num2 := lt.pop()
-			num1 := lt.pop()
-			sum := num1 / num2
-			lt.push(sum)
-		default:
-			temp, _ := strconv.ParseInt(v, 10, 64)
-			lt.push(int(temp))
-		}
-	}
-	return lt.pop()
+	var temp ST
+	var nums []int = []int{1, 3, 8, 1, 1, 2, 1, 3, 9, 5, 7, 4}
+	temp.nums = nums
+	sort.Sort(sm(temp))
+	// fmt.Println(maximumGap(nums))
+	fmt.Println(temp.nums)
 
 }
 
-// 实现一个堆
-type stack struct {
-	List []int
+type ST struct {
+	nums []int
 }
 
-func (this *stack) push(dig int) {
-	this.List = append(this.List, dig)
+type sm ST
+
+func (this sm) Len() int {
+	return len(this.nums)
 }
 
-func (this *stack) pop() int {
-	length := len(this.List)
-	wait := this.List[length-1]
-	this.List = this.List[:length-1]
-	return wait
+func (this sm) Swap(n, m int) {
+	this.nums[n], this.nums[m] = this.nums[m], this.nums[n]
 }
 
-func (this *stack) isnil() bool {
-	return len(this.List) == 0
+func (this sm) Less(i, j int) bool {
+	return this.nums[i] > this.nums[j]
 }
