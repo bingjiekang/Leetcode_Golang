@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 // "strconv"
@@ -22,29 +21,24 @@ func main() {
 	// 	}
 
 	// }
-	var temp ST
-	var nums []int = []int{1, 3, 8, 1, 1, 2, 1, 3, 9, 5, 7, 4}
-	temp.nums = nums
-	sort.Sort(sm(temp))
-	// fmt.Println(maximumGap(nums))
-	fmt.Println(temp.nums)
+	// num1 := "3"
+	// s1 := []rune(num1)
+	// num2 := "5"
+	// s2 := []rune(num2)
+	// fmt.Println(s1 * s2)
 
 }
 
-type ST struct {
-	nums []int
-}
-
-type sm ST
-
-func (this sm) Len() int {
-	return len(this.nums)
-}
-
-func (this sm) Swap(n, m int) {
-	this.nums[n], this.nums[m] = this.nums[m], this.nums[n]
-}
-
-func (this sm) Less(i, j int) bool {
-	return this.nums[i] > this.nums[j]
+func singleNumber(nums []int) int {
+	var temp map[int]int = make(map[int]int, 0)
+	for _, v := range nums {
+		temp[v]++
+		delete(temp, v)
+	}
+	for i, v := range temp {
+		if v == 1 {
+			return i
+		}
+	}
+	return 0
 }
