@@ -50,32 +50,32 @@ func computeSimilarities(docs [][]int) (sult []string) {
 		}
 	}
 	// 定义一个map2用来存储对应两组出现的次数,表示交集
-	// var hash map[string]int = make(map[string]int, 0)
-	// 定义一个二维切片存储对应的次数
-	var lt [][]int = make([][]int, length, length+1)
+	var hash map[string]int = make(map[string]int, 0)
 	// 遍历每个map1,提取对应两组出现的组数 对其进行加1表示交集数
 	for _, v := range curd {
 		if v[length] > 1 {
 			for i := 0; i < length-1; i++ {
 				for j := i + 1; j < length; j++ {
-					lt[i] = make([]int, length, length+1)
 					if v[i] == 1 && v[j] == 1 {
-						lt[i][j]++
+						temp := strconv.Itoa(i) + "," + strconv.Itoa(j)
+						hash[temp]++
 					}
 				}
 			}
 		}
 	}
-	clear(curd)
-	// 遍历每个数组获取对应数组下标的长度 相加-交集即为并集,想除并转换加入即可
-	for i := 0; i < length-1; i++ {
-		for j := i + 1; j < length; j++ {
-			// 求对应并集
-			ad := len(docs[i]) + len(docs[j]) - lt[i][j]
-			ku := float64(lt[i][j])/float64(ad) + 1e-9
-			tsu := fmt.Sprintf("%d,%d: %.4f", i, j, ku)
-			sult = append(sult, tsu)
+	// 遍历每个map2获取对应数组的长度 相加-交集即为并集,想除并转换加入即可
+	for k, v := range hash {
+		var tsu string
+		su := strings.Split(k, ",")
+		t1, _ := strconv.ParseInt(su[0], 10, 64)
+		t2, _ := strconv.ParseInt(su[1], 10, 64)
+		ad := len(docs[t1]) + len(docs[t2]) - v
+		ku := float64(v)/float64(ad) + 1e-9
+		if ku > 0 {
+			tsu = k + ": " + fmt.Sprintf("%.4f", ku)
 		}
+		sult = append(sult, tsu)
 	}
 	return
 }
