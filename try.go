@@ -2,50 +2,72 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"sort"
 )
 
-// "strconv"
-// "time"
-// "math"
-
 func main() {
-	st := []string{"/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"}
-	fmt.Println(removeComments(st))
+	var tmp []string = make([]string, 0)
+	var st string
+	var hmap map[string]int = make(map[string]int, 0)
+
+	for {
+		_, err := fmt.Scan(&st)
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+		} else {
+			tmp = append(tmp, st)
+		}
+	}
+	// fmt.Println(tmp)
+	for _, v := range tmp {
+		hmap[v]++
+	}
+
+	var temp []mp = make([]mp, 0)
+	for k, v := range hmap {
+		tp := mp{k, v}
+		temp = append(temp, tp)
+	}
+	sort.Sort(Ed(temp))
+	for _, v := range temp {
+		if v.num >= 3 {
+			fmt.Println(v.name)
+		} else {
+			break
+		}
+	}
 
 }
 
-// 两大类：在块内和不在块内，用bloak进行标记
-func removeComments(source []string) (sult []string) {
-	// 定义bloak用来记录是否在标注内
-	var bloak bool = false
-	// 当检查到// 时直接结束这个
-	temp := []byte{}
-	for _, v := range source {
-		// var temp []byte = make([]byte, 0)
+type mp struct {
+	name string
+	num  int
+}
 
-		length := len(v)
-		// 当检查到/* bloak进行标记，直到*/进行解除
-		for i := 0; i < length; i++ {
-			if i < length-1 && v[i] == '/' && v[i+1] == '/' && bloak == false {
-				break
-			} else if i < length-1 && v[i] == '/' && v[i+1] == '*' {
-				i++
-				bloak = true
-			} else if i < length-1 && bloak && v[i] == '*' && v[i+1] == '/' {
-				i++
-				bloak = false
-			} else {
-				if !bloak {
-					temp = append(temp, v[i])
-				}
-			}
-		}
-		ltmp := string(temp)
-		if ltmp != "" && !bloak {
-			sult = append(sult, ltmp)
-			temp = []byte{}
-		}
+type Ed []mp
 
+func (this Ed) Len() int {
+	return len(this)
+}
+
+func (this Ed) Less(n, m int) bool {
+	if this[n].num > this[m].num {
+		return true
+	} else if this[n].num == this[m].num {
+		if this[n].name < this[m].name {
+			return true
+		} else {
+			return false
+		}
+	} else {
+		return false
 	}
-	return
+}
+
+func (this Ed) Swap(n, m int) {
+	this[n].name, this[m].name = this[m].name, this[n].name
+	this[n].num, this[m].num = this[m].num, this[n].num
 }
