@@ -1,73 +1,30 @@
-package main
+func wiggleSort(nums []int) {
+	length := len(nums)
+	quicksort(0, length-1, nums)
+	for temp := 2; temp < length; {
+		nums[temp-1], nums[temp] = nums[temp], nums[temp-1]
+		temp += 2
+	}
+}
 
-import (
-	"fmt"
-	"io"
-	"sort"
-)
-
-func main() {
-	var tmp []string = make([]string, 0)
-	var st string
-	var hmap map[string]int = make(map[string]int, 0)
-
-	for {
-		_, err := fmt.Scan(&st)
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-		} else {
-			tmp = append(tmp, st)
+func quicksort(begin, end int, nums []int) {
+	left, right := begin, end
+	if left > right {
+		return
+	}
+	temp := left
+	for left < right {
+		for left < right && nums[right] <= nums[temp] {
+			right--
 		}
-	}
-	// fmt.Println(tmp)
-	for _, v := range tmp {
-		hmap[v]++
-	}
-
-	var temp []mp = make([]mp, 0)
-	for k, v := range hmap {
-		tp := mp{k, v}
-		temp = append(temp, tp)
-	}
-	sort.Sort(Ed(temp))
-	for _, v := range temp {
-		if v.num >= 3 {
-			fmt.Println(v.name)
-		} else {
-			break
+		for left < right && nums[left] >= nums[temp] {
+			left++
 		}
+		nums[left], nums[right] = nums[right], nums[left]
 	}
-
-}
-
-type mp struct {
-	name string
-	num  int
-}
-
-type Ed []mp
-
-func (this Ed) Len() int {
-	return len(this)
-}
-
-func (this Ed) Less(n, m int) bool {
-	if this[n].num > this[m].num {
-		return true
-	} else if this[n].num == this[m].num {
-		if this[n].name < this[m].name {
-			return true
-		} else {
-			return false
-		}
-	} else {
-		return false
+	if left == right {
+		nums[temp], nums[left] = nums[left], nums[temp]
 	}
-}
-
-func (this Ed) Swap(n, m int) {
-	this[n].name, this[m].name = this[m].name, this[n].name
-	this[n].num, this[m].num = this[m].num, this[n].num
+	quicksort(begin, left-1, nums)
+	quicksort(right+1, end, nums)
 }
