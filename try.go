@@ -1,30 +1,27 @@
-func wiggleSort(nums []int) {
-	length := len(nums)
-	quicksort(0, length-1, nums)
-	for temp := 2; temp < length; {
-		nums[temp-1], nums[temp] = nums[temp], nums[temp-1]
-		temp += 2
-	}
+package main
+
+type WordsFrequency struct {
+	str map[string]int
 }
 
-func quicksort(begin, end int, nums []int) {
-	left, right := begin, end
-	if left > right {
-		return
+func Constructor(book []string) WordsFrequency {
+	var temp WordsFrequency
+	for _, v := range book {
+		temp.str[v]++
 	}
-	temp := left
-	for left < right {
-		for left < right && nums[right] <= nums[temp] {
-			right--
-		}
-		for left < right && nums[left] >= nums[temp] {
-			left++
-		}
-		nums[left], nums[right] = nums[right], nums[left]
-	}
-	if left == right {
-		nums[temp], nums[left] = nums[left], nums[temp]
-	}
-	quicksort(begin, left-1, nums)
-	quicksort(right+1, end, nums)
+	return temp
 }
+
+func (this *WordsFrequency) Get(word string) int {
+	_, ok := this.str[word]
+	if ok {
+		return this.str[word]
+	}
+	return 0
+}
+
+/**
+ * Your WordsFrequency object will be instantiated and called as such:
+ * obj := Constructor(book);
+ * param_1 := obj.Get(word);
+ */
