@@ -1,44 +1,15 @@
 package main
 
-type MinStack struct {
-	length int
-	min    int
-	st     []int
-}
-
-/** initialize your data structure here. */
-func Constructor() MinStack {
-	var temp MinStack
-	return temp
-}
-
-func (this *MinStack) Push(x int) {
-	this.length++
-	if x < this.min {
-		this.min = x
+func getMinimumTime(time []int, fruits [][]int, limit int) int {
+	var cout, tm int
+	for _, v := range fruits {
+		if v[1]%limit == 0 {
+			cout = v[1] / limit
+		} else {
+			cout = v[1]/limit + 1
+		}
+		tm += cout * time[v[0]]
+		cout = 0
 	}
-	this.st = make([]int, 0)
-	this.st = append(this.st, x)
+	return tm
 }
-
-func (this *MinStack) Pop() {
-	this.length--
-	this.st = this.st[0:this.length]
-}
-
-func (this *MinStack) Top() int {
-	return this.st[this.length-1]
-}
-
-func (this *MinStack) Min() int {
-	return this.min
-}
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * obj := Constructor();
- * obj.Push(x);
- * obj.Pop();
- * param_3 := obj.Top();
- * param_4 := obj.Min();
- */
