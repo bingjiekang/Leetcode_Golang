@@ -1,57 +1,39 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	capacity := []int{54, 18, 91, 49, 51, 45, 58, 54, 47, 91, 90, 20, 85, 20, 90, 49, 10, 84, 59, 29, 40, 9, 100, 1, 64, 71, 30, 46, 91}
-	rocks := []int{14, 13, 16, 44, 8, 20, 51, 15, 46, 76, 51, 20, 77, 13, 14, 35, 6, 34, 34, 13, 3, 8, 1, 1, 61, 5, 2, 15, 18}
-	length := len(capacity)
-	quicksort(0, length-1, capacity)
-	quicksort(0, length-1, rocks)
-	fmt.Println(capacity, rocks)
+	var tm = "saet"
+	fmt.Println(tm[0])
 }
 
-func maximumBags(capacity []int, rocks []int, additionalRocks int) int {
-	// 获得每个背包空的位置，然后排序，从小到大计数直到数量大于额外石头数量
-	length := len(capacity)
-	// ord := []int{}
-	var cout, sult int
-	for i := 0; i < length; i++ {
-		rocks[i] = capacity[i] - rocks[i]
-	}
-	quicksort(0, length-1, rocks)
-	for _, v := range rocks {
-		sult += v
-		if sult <= additionalRocks {
-			cout++
+func tictactoe(board []string) string {
+	// 定义blank记录空白字符的数量
+	var blank int
+	// 双层循环根据对角线遍历三行三列，并同时记录空白的数量
+	for i := 0; i < 3; {
+		if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) || (board[0][i] == board[1][i] && board[0][i] == board[2][i]) {
+			return string(board[i][i])
 		} else {
-			break
+			for j := 0; j < 3; j++ {
+				if board[i][j] == ' ' {
+					blank++
+				}
+			}
 		}
 	}
-	return cout
+	if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) || (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+		return string(board[1][1])
+	} else {
+		if blank == 0 {
+			return "Draw"
+		} else {
+			return "Pending"
+		}
+	}
 
-}
+	// 在记录对角线是否合理，若合理某一方获胜
 
-func quicksort(start, end int, nums []int) {
-	if start > end {
-		return
-	}
-	left, right := start, end
-	temp := start
-	for left < right {
-		for left < right && nums[right] >= nums[temp] {
-			right--
-		}
-		for left < right && nums[left] <= nums[temp] {
-			left++
-		}
-		nums[left], nums[right] = nums[right], nums[left]
-	}
-	if left == right {
-		nums[temp], nums[left] = nums[left], nums[temp]
-	}
-	quicksort(start, left-1, nums)
-	quicksort(right+1, end, nums)
+	// 如果blank为0则返回Pending，若不为0切不获胜返回返回Draw
+
 }
