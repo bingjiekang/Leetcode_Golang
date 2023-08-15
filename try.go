@@ -3,8 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	var tm = "saet"
-	fmt.Println(tm[0])
+	fmt.Println(9/5)
 }
 
 func tictactoe(board []string) string {
