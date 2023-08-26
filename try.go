@@ -1,39 +1,38 @@
 package main
 
 import (
-	"sort"
+	"fmt"
 )
 
 func main() {
-	// var str string
-	// fmt.Println(byte('a'), byte('A'), byte(' '))
-	// reader := bufio.NewReader(os.Stdin)
-	// tmp, _, _ := reader.ReadLine()
-	// for i, v := range tmp {
-	// 	if v < 'A' {
-	// 		continue
-	// 	} else if v < 'a' {
-	// 		tmp[i] = v + 32
-	// 	} else {
-	// 		tmp[i] = v - 32
-	// 	}
-	// }
-	// left, right := 0, len(tmp)-1
-	// for left < right {
-	// 	tmp[left], tmp[right] = tmp[right], tmp[left]
-	// 	left++
-	// 	right--
-	// }
-	// fmt.Println(string(tmp))
-	// var tm int = 3
-	// tf := []int{1, 2}
-	// var td chan int = make(chan int, 0)
-	// tmw(tm)
-	// tmw(tf)
-	// tmw(td)
-
+	var n, m int
+	// var lt [][]int = []int{}
+	var coast, worth []int = []int{}, []int{}
+	fmt.Scan(&n, &m)
+	for i := 0; i < n; i++ {
+		var k, t int
+		fmt.Scan(&k, &t)
+		coast = append(coast, k)
+		worth = append(worth, t)
+	}
+	var sult []int = make([]int, m+1)
+	for i := 0; i < n; i++ {
+		for j := m; j >= coast[i]; j-- {
+			sult[j] = max(sult[j-1], sult[j-coast[i]]+worth[i])
+		}
+	}
+	var mx int
+	for i := 0; i < m; i++ {
+		if sult[i] > mx {
+			mx = sult
+		}
+	}
+	return mx
 }
 
-func smallestDifference(a []int, b []int) int {
-	sort.Ints()
+func max(n, m int) int {
+	if n > m {
+		return n
+	}
+	return m
 }
