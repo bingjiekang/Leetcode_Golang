@@ -2,37 +2,46 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 func main() {
-	var n, m int
-	// var lt [][]int = []int{}
-	var coast, worth []int = []int{}, []int{}
-	fmt.Scan(&n, &m)
-	for i := 0; i < n; i++ {
-		var k, t int
-		fmt.Scan(&k, &t)
-		coast = append(coast, k)
-		worth = append(worth, t)
-	}
-	var sult []int = make([]int, m+1)
-	for i := 0; i < n; i++ {
-		for j := m; j >= coast[i]; j-- {
-			sult[j] = max(sult[j-1], sult[j-coast[i]]+worth[i])
-		}
-	}
-	var mx int
+	var m int
+	dt := map[string][]string{}
+	tgname := []string{}
+	fmt.Scanf("%d", &m)
+
 	for i := 0; i < m; i++ {
-		if sult[i] > mx {
-			mx = sult
+		var name, add string
+
+		fmt.Scanln(&name, &add)
+		_, ok := dt[name]
+		if !ok {
+			dt[name] = append(dt[name], add)
+			tgname = append(tgname, name)
+
+		} else {
+			var tag bool = true
+			for _, v := range dt[name] {
+				if add == v {
+					tag = false
+					break
+				}
+			}
+			if tag {
+				dt[name] = append(dt[name], add)
+
+			}
 		}
 	}
-	return mx
+	sort.Strings(tgname)
+	for _, v := range tgname {
+		fmt.Println(v, dt[v][0], len(dt[v])-1)
+	}
+
 }
 
-func max(n, m int) int {
-	if n > m {
-		return n
-	}
-	return m
-}
+// type infomg struct{
+//     address []string
+//     length int
+// }
