@@ -1,85 +1,43 @@
 package main
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"fmt"
-	"sort"
 )
 
 func main() {
-	// var m int
-	// dt := map[string][]string{}
-	// tgname := []string{}
-	// fmt.Scanf("%d", &m)
-
-	// for i := 0; i < m; i++ {
-	// 	var name, add string
-
-	// 	fmt.Scanln(&name, &add)
-	// 	_, ok := dt[name]
-	// 	if !ok {
-	// 		dt[name] = append(dt[name], add)
-	// 		tgname = append(tgname, name)
-
-	// 	} else {
-	// 		var tag bool = true
-	// 		for _, v := range dt[name] {
-	// 			if add == v {
-	// 				tag = false
-	// 				break
-	// 			}
-	// 		}
-	// 		if tag {
-	// 			dt[name] = append(dt[name], add)
-
-	// 		}
-	// 	}
-	// }
-	// sort.Strings(tgname)
-	// for _, v := range tgname {
-	// 	fmt.Println(v, dt[v][0], len(dt[v])-1)
-	// }
-
-	test()
+	// var a []int = make([]int, 3)
+	// v := []int{1, 2, 3}
+	// fmt.Println(a, v)
+	// copy(a, v)
+	// fmt.Println(a, v)
+	fmt.Println(permute([]int{1, 2, 3}))
 }
 
-func test() {
+func permute(nums []int) (sult [][]int) {
+	// 获取长度
+	length := len(nums)
+	// 遍历，将切片分为已加入和未加入两组，递归将未加入的加入到即可
+	var rsv func(index int)
 
-	dict := map[string]string{"order_id": "20220201030210321",
-		"amount":       "42",
-		"notify_url":   "http://example.com/notify",
-		"redirect_url": "http://example.com/redirect"}
+	rsv = func(index int) {
+		if index == length-1 {
+			var temp []int = make([]int, length)
 
-	keys := make([]string, 0, len(dict))
-	for k := range dict {
-		keys = append(keys, k)
+			copy(temp, nums)
+			sult = append(sult, temp)
+			// return
+		}
+
+		for i := index; i < length; i++ {
+			nums[i], nums[index] = nums[index], nums[i]
+			rsv(index + 1)
+			nums[i], nums[index] = nums[index], nums[i]
+		}
+		// return
+
 	}
-	sort.Strings(keys)
-	var str string
-	for i := 0; i < len(keys); i++ {
-		x := keys[i]
-		value := dict[x]
-		str += x + "=" + value + "&"
-	}
-	param := str[0:len(str)-1] + "epusdt_password_xasddawqe"
+	rsv(0)
 
-	// fmt.Println(param)
-	A := MD5(param)
-
-	dict["signature"] = A
-	fmt.Println(dict)
+	return
 
 }
-
-func MD5(v string) string {
-	d := []byte(v)
-	m := md5.New()
-	m.Write(d)
-	return hex.EncodeToString(m.Sum(nil))
-}
-
-// type infomg struct{
-//     address []string
-//     length int
-// }
