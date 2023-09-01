@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"strconv"
+	"strings"
 )
 
 func main() {
@@ -9,35 +10,31 @@ func main() {
 	// v := []int{1, 2, 3}
 	// fmt.Println(a, v)
 	// copy(a, v)
+	// var tm map[[]int]bool = make(map[interface{}]bool)
 	// fmt.Println(a, v)
-	fmt.Println(permute([]int{1, 2, 3}))
+
+	// tm[[1,2,1]] = true
+	// fmt.Println(permute([]int{1, 2, 3}))
 }
 
-func permute(nums []int) (sult [][]int) {
-	// 获取长度
-	length := len(nums)
-	// 遍历，将切片分为已加入和未加入两组，递归将未加入的加入到即可
-	var rsv func(index int)
-
-	rsv = func(index int) {
-		if index == length-1 {
-			var temp []int = make([]int, length)
-
-			copy(temp, nums)
-			sult = append(sult, temp)
-			// return
+func compareVersion(version1 string, version2 string) int {
+	lt1, lt2 := strings.Split(version1, "."), strings.Split(version2, ".")
+	length1, length2 := len(lt1), len(lt2)
+	for i := 0; i < length1 || i < length2; i++ {
+		x, y := 0, 0
+		if i < length1 {
+			x, _ = strconv.Atoi(lt1[i])
 		}
-
-		for i := index; i < length; i++ {
-			nums[i], nums[index] = nums[index], nums[i]
-			rsv(index + 1)
-			nums[i], nums[index] = nums[index], nums[i]
+		if i < length2 {
+			y, _ = strconv.Atoi(lt2[i])
 		}
-		// return
+		if x > y {
+			return 1
+		}
+		if x < y {
+			return -1
+		}
 
 	}
-	rsv(0)
-
-	return
-
+	return 0
 }
