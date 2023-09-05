@@ -1,40 +1,49 @@
 package main
 
 import (
-	"strconv"
-	"strings"
+	"fmt"
+	"sort"
 )
 
 func main() {
-	// var a []int = make([]int, 3)
-	// v := []int{1, 2, 3}
-	// fmt.Println(a, v)
-	// copy(a, v)
-	// var tm map[[]int]bool = make(map[interface{}]bool)
-	// fmt.Println(a, v)
+	var m, temp int
+	var lt []int = make([]int, 0)
+	fmt.Scanln(&m)
+	for i := 0; i < m; i++ {
+		fmt.Scanf("%d", &temp)
+		lt = append(lt, temp)
+	}
+	sort.Ints(lt)
+	var cout int
+	var dif map[int]int = make(map[int]int, 0)
+	for i := 0; i < m; i++ {
+		for lt[i] == -1 && i < m {
+			i++
+		}
 
-	// tm[[1,2,1]] = true
-	// fmt.Println(permute([]int{1, 2, 3}))
-}
-
-func compareVersion(version1 string, version2 string) int {
-	lt1, lt2 := strings.Split(version1, "."), strings.Split(version2, ".")
-	length1, length2 := len(lt1), len(lt2)
-	for i := 0; i < length1 || i < length2; i++ {
-		x, y := 0, 0
-		if i < length1 {
-			x, _ = strconv.Atoi(lt1[i])
-		}
-		if i < length2 {
-			y, _ = strconv.Atoi(lt2[i])
-		}
-		if x > y {
-			return 1
-		}
-		if x < y {
-			return -1
+		for j := i + 1; j < m; {
+			if (lt[i] == lt[j] || lt[j] == -1) && j < m {
+				j++
+			} else {
+				_, ok := dif[j]
+				if !ok {
+					lt[j] = -1
+					lt[i] = -1
+					cout++
+					dif[lt[i]] = lt[j]
+					break
+				} else {
+					if dif[lt[i]] != lt[j] {
+						dif[lt[i]] = lt[j]
+						cout++
+						lt[j] = -1
+						lt[i] = -1
+					}
+				}
+			}
 		}
 
 	}
-	return 0
+	fmt.Println(cout)
+
 }
