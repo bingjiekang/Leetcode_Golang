@@ -5,36 +5,17 @@ import (
 )
 
 func main() {
-	fmt.Println(backspaceCompare("ab##", "c#d#"))
+	// fmt.Println(backspaceCompare("ab##", "c#d#"))
 
 }
 
-func backspaceCompare(s string, t string) bool {
-	var lts, ltt []rune = make([]rune, 0), make([]rune, 0)
-	var couts, coutt int
-	for _, v := range s {
-		if v == '#' && couts > 0 {
-			lts = lts[0 : couts-1]
-			couts--
-		} else if v != '#' {
-			lts = append(lts, v)
-			couts++
+func numTrees(n int) int {
+	var G []int = make([]int, n+1)
+	G[0] = 1
+	for i := 1; i <= n; i++ {
+		for j := 1; j <= i; j++ {
+			G[i] += G[j-1] * G[i-j]
 		}
 	}
-
-	for _, v := range t {
-		if v == '#' && coutt > 0 {
-			ltt = ltt[0 : coutt-1]
-			coutt--
-		} else if v != '#' {
-			ltt = append(ltt, v)
-			coutt++
-		}
-	}
-	if string(lts) == string(ltt) {
-		return true
-	} else {
-		return false
-	}
-
+	return G[n]
 }
