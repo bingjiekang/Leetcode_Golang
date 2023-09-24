@@ -2,20 +2,28 @@ package main
 
 import (
 	"fmt"
+	"unsafe"
 )
 
 func main() {
-	// fmt.Println(backspaceCompare("ab##", "c#d#"))
-
+	// st := []int{1, 3, 4, 6, 8}
+	// fmt.Println(st, unsafe.Pointer(&st))
+	// test2(st)
+	// fmt.Println(st, unsafe.Pointer(&st))
 }
 
-func numTrees(n int) int {
-	var G []int = make([]int, n+1)
-	G[0] = 1
-	for i := 1; i <= n; i++ {
-		for j := 1; j <= i; j++ {
-			G[i] += G[j-1] * G[i-j]
+func sortedSquares(nums []int) (sult []int) {
+	length := len(nums)
+	for left, right := 0, length-1; left <= right; {
+		lf, rg := nums[left]*nums[left], nums[right]*nums[right]
+		if lf >= rg {
+			sult = append([]int{lf}, sult...)
+			// sult = append(sult,)
+			left++
+		} else {
+			sult = append([]int{rg}, sult...)
+			right--
 		}
 	}
-	return G[n]
+	return sult
 }
