@@ -2,33 +2,20 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 func main() {
-	var tm []int = []int{2, 4, 1, 5, 6, 9, 5}
-	sort.Ints(tm)
-	// // var tm []string = []string{"acd", "bed", "accd"}
-	// // fmt.Println(minNumBooths(tm))
-	// var dmm, dmd map[rune]int = make(map[rune]int, 0), make(map[rune]int, 0)
-	// dmm['r'] = 1
-	// dmd['t'] = 3
-	// dmm['r'] = dmd['t']
-	// fmt.Println(dmm['r'], dmm['t'], dmm['u'])
+	newData := []string{"1", "2", "3", "4", "5", "6", "7"}
+	for i := 0; i < len(newData); i++ {
+		newData = append(newData[:i], newData[i+1:]...)
+		fmt.Println(newData)
+		i--
+	}
+
 }
 
-func breakfastNumber(staple []int, drinks []int, x int) int {
-	lentap, lendnk := len(staple), len(drinks)
-	var sult int
-	sort.Ints(staple)
-	sort.Ints(drinks)
-	for i := lentap - 1; i >= 0; i-- {
-		for j := lendnk - 1; j >= 0; j-- {
-			if staple[i]+drinks[j] <= x {
-				sult = ((i + 1) * (j + 1)) % (1e9 + 7)
-				return sult
-			}
-		}
-	}
-	return sult
-}
+// func cutSquares(square1 []int, square2 []int) []float64 {
+// 	// 先求两个正方形的中心，然后求直线，直线与正方形的交点就是对应的结果
+// 	sqrx1, sqry1 := square1[0]+square1[2]/2, square1[1]+square1[2]/2
+
+// }
