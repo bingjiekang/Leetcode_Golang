@@ -10,7 +10,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "/Users/kangbing/go/src/Leetcode_Golang/try.go"
+            "program": "C:/Users/94284/go/src/Leetcode_Golang/try.go"
         }
     ]
 }
